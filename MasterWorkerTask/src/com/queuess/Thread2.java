@@ -3,7 +3,7 @@ package com.queuess;
 import java.util.concurrent.BlockingQueue;
 
 public class Thread2 implements Runnable {
-	protected BlockingQueue<Job> queue = null;
+	BlockingQueue<Job> queue = null;
 
     public Thread2(BlockingQueue<Job> queue) {
         this.queue = queue;
@@ -14,9 +14,16 @@ public class Thread2 implements Runnable {
         try {
         	Job job=queue.take();
             System.out.println("removed element is:" +job.getSquare());
-        } catch (InterruptedException e) {
+        }
+        
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
+        catch(NullPointerException ne) {
+        	ne.printStackTrace();
+        	
+        }
+        
     }
 
 }

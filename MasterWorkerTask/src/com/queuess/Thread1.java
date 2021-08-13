@@ -13,13 +13,18 @@ public class Thread1 implements Runnable {
 	public void run() {
         try {
         	Job j=new Job(2);
-        	Job j1=new Job(3);
         	System.out.println("adding element: "+j.getSquare());
+        	queue.put(j);
+        	Job j1=new Job(3);
         	System.out.println("adding element: "+j1.getSquare());
-            queue.put(j);
             queue.put(j1);
-        } catch (InterruptedException e) {
+            queue.put(null);
+        } 
+        catch (InterruptedException e) {
             e.printStackTrace();
+        }
+        catch(NullPointerException ne) {
+        	ne.printStackTrace();
         }
     }
 }
