@@ -1,30 +1,29 @@
 package com.queuess;
-import java.util.concurrent.BlockingQueue;
+import com.business.Job;
 
+import java.util.concurrent.BlockingQueue;
 public class Thread1 implements Runnable {
 	
 	protected BlockingQueue<Job> queue = null;
+	private Job Job;
+	
 
-    public Thread1(BlockingQueue<Job> queue) {
+    public Thread1(BlockingQueue<Job> queue,Job job) {
         this.queue = queue;
+        this.Job=job;
     }
-
 
 	public void run() {
         try {
-        	Job j=new Job(2);
-        	System.out.println("adding element: "+j.getSquare());
-        	queue.put(j);
-        	Job j1=new Job(3);
-        	System.out.println("adding element: "+j1.getSquare());
-            queue.put(j1);
-            queue.put(null);
+        	System.out.println("adding element: "+this.Job.square());
+        	queue.put(this.Job);
         } 
         catch (InterruptedException e) {
             e.printStackTrace();
         }
-        catch(NullPointerException ne) {
-        	ne.printStackTrace();
-        }
     }
+
+
+		
+	
 }
