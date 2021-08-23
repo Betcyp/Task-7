@@ -3,10 +3,10 @@ import java.util.concurrent.BlockingQueue;
 
 import com.business.Job;
 
-public class Thread2 implements Runnable {
+public class RemovedThread implements Runnable {
 	BlockingQueue<Job> queue = null;
 
-    public Thread2(BlockingQueue<Job> queue) {
+    public RemovedThread(BlockingQueue<Job> queue) {
         this.queue = queue;
     }
 

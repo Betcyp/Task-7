@@ -4,12 +4,33 @@ import com.interfacess.JobInterface;
 
 public class Job implements JobInterface {
 
-	int num;
-	public Job(int num) {
-		this.num=num;
+    String studName;
+	String sub;
+	int studMark;
+	
+	public void setStudName(String name) {
+		this.studName=name;
 	}
+	public void setSub(String sub) {
+		this.sub=sub;
+	}
+	public void setStudMark(int num) {
+		this.studMark= num;
+	}
+	public String getStudName() {
+		return this.studName;
+	}
+	public String getSub() {
+		return this.sub;
+	}
+	public int getStudMark() {
+		return this.studMark;
+	}
+	
 	public int square() {
-		return this.num*this.num;
-		
+		return this.studMark*this.studMark;
+	}
+	public int cube() {
+		return this.studMark*this.studMark*this.studMark;
 	}
 }
