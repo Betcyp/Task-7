@@ -5,32 +5,38 @@ import com.interfacess.JobInterface;
 public class Job implements JobInterface {
 
     String studName;
-	String sub;
-	int studMark;
+	float studMark1;
+	float studMark2;
+	float studMark3;
 	
 	public void setStudName(String name) {
 		this.studName=name;
 	}
-	public void setSub(String sub) {
-		this.sub=sub;
+	public void setStudMark1(int maths) {
+		this.studMark1=maths;
+	}	
+	public void setStudMark2(int physics) {	
+		this.studMark2=physics;
 	}
-	public void setStudMark(int num) {
-		this.studMark= num;
+	public void setStudMark3(int chemistry) {	
+		this.studMark3=chemistry;
 	}
 	public String getStudName() {
 		return this.studName;
 	}
-	public String getSub() {
-		return this.sub;
+	public float getStudMark1() {
+		return this.studMark1;
 	}
-	public int getStudMark() {
-		return this.studMark;
+	public float getStudMark2() {
+		return this.studMark2;
+	}
+	public float getStudMark3() {
+		return this.studMark3;
 	}
 	
-	public int square() {
-		return this.studMark*this.studMark;
+	public float calc_percentage() {
+		return (this.studMark1+this.studMark2+this.studMark3)/3;
+		
 	}
-	public int cube() {
-		return this.studMark*this.studMark*this.studMark;
-	}
+	
 }

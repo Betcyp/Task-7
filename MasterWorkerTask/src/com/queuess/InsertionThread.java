@@ -1,7 +1,7 @@
 package com.queuess;
-import com.business.Job;
-
 import java.util.concurrent.BlockingQueue;
+
+import com.business.Job;
 public class InsertionThread implements Runnable {
 	
 	protected BlockingQueue<Job> queue = null;
@@ -12,12 +12,10 @@ public class InsertionThread implements Runnable {
         this.queue = queue;
         this.job=job;
     }
-
+    
 	public void run() {
         try {
-        	System.out.println("adding details are: "+job.getStudName()+" "+job.getSub()+" "+job.square()+" "+job.cube());
-        	//System.out.println("adding details are: "+Job.square());
-        	//System.out.println("adding details are: "+Job.cube());
+        	System.out.println("adding details are: "+job.getStudName()+" "+job.calc_percentage());
         	queue.put(job);
         } 
         catch (InterruptedException e) {
