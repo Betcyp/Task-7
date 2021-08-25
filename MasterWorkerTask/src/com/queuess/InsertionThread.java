@@ -15,7 +15,7 @@ public class InsertionThread implements Runnable {
     
 	public void run() {
         try {
-        	System.out.println("adding details are: "+job.getStudName()+" "+job.calc_percentage());
+        	System.out.println("adding details are: "+job.getStudName()+" "+job.getStudMark1()+" "+job.getStudMark2()+" "+job.getStudMark3()+" "+job.calcPercentage());
         	queue.put(job);
         } 
         catch (InterruptedException e) {

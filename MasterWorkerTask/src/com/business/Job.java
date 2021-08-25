@@ -5,9 +5,11 @@ import com.interfacess.JobInterface;
 public class Job implements JobInterface {
 
     String studName;
-	float studMark1;
-	float studMark2;
-	float studMark3;
+	int studMark1;
+	int studMark2;
+	int studMark3;
+	double total;
+	double per;
 	
 	public void setStudName(String name) {
 		this.studName=name;
@@ -24,19 +26,20 @@ public class Job implements JobInterface {
 	public String getStudName() {
 		return this.studName;
 	}
-	public float getStudMark1() {
+	public int getStudMark1() {
 		return this.studMark1;
 	}
-	public float getStudMark2() {
+	public int getStudMark2() {
 		return this.studMark2;
 	}
-	public float getStudMark3() {
+	public int getStudMark3() {
 		return this.studMark3;
 	}
 	
-	public float calc_percentage() {
-		return (this.studMark1+this.studMark2+this.studMark3)/3;
-		
+	public double calcPercentage() {
+		total=this.studMark1+this.studMark2+this.studMark3;
+		per=(total/300.0)*100;
+		return Math.round(per);
 	}
 	
 }

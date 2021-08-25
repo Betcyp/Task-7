@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import com.business.Job;
@@ -16,6 +17,7 @@ import java.util.concurrent.BlockingQueue;
 public class ReadCsvFile {
 
 	protected BlockingQueue<Job> queue =new ArrayBlockingQueue<Job>(2);
+//	private Job job;
 	
 	
 
@@ -46,12 +48,14 @@ public class ReadCsvFile {
 	}
 	
 	public Job fetch() throws InterruptedException {
-			
-	          return queue.take();
-		
-	}
-}
+		return queue.take();
 	
+	}
+		
+	public boolean isQueueEmpty() {
+		return queue.isEmpty();
+	}
+}	
 
 
 	
