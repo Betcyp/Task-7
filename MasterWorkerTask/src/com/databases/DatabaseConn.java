@@ -1,5 +1,6 @@
 package com.databases;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,8 +12,15 @@ public class DatabaseConn {
 	public static void insert(Job j1){
 		try {
 			Connection connection=getConnection();
-			PreparedStatement inserted=connection.prepareStatement("INSERT INTO marklists(name,maths,physics,chemistry,percentage) VALUES ('"+j1.getStudName()+"', '"+j1.getStudMark1()+"', '"+j1.getStudMark2()+"', '"+j1.getStudMark3()+"', '"+j1.calcPercentage()+"')");;
-			inserted.executeUpdate();
+			PreparedStatement inserted=connection.prepareStatement(StudentQueries.insertQuery);
+			{
+				inserted.setString(1, j1.getStudName());
+				inserted.setBigDecimal(2, new BigDecimal(j1.getStudMark1()));
+				inserted.setBigDecimal(3, new BigDecimal(j1.getStudMark2()));
+				inserted.setBigDecimal(4, new BigDecimal(j1.getStudMark3()));
+				inserted.setBigDecimal(5, new BigDecimal(j1.calcPercentage()));
+				inserted.executeUpdate();
+			}
 		}
 		catch(Exception e) {
 			System.out.println(e);
