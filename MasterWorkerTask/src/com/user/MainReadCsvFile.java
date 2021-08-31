@@ -10,11 +10,7 @@ public class MainReadCsvFile {
 		csv.readCsvFile(file);
 		Thread.sleep(500);
 		DatabaseConn db=new DatabaseConn();
-		while(csv.isQueueEmpty()==false) {
-			Job j1=csv.fetch();
-			System.out.println("fetched items are:"+j1.getStudName()+" "+j1.getStudMark1()+" "+j1.getStudMark2()+" "+j1.getStudMark3()+" "+j1.calcPercentage());
-			db.insert(j1);
-		}
+		db.insertDataInToDatabase(csv);
 	}
 }
 

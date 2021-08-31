@@ -1,24 +1,25 @@
 package com.databases;
 
-import java.math.BigDecimal;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-
+import java.util.Properties;
 import com.business.Job;
 import com.constants.StudentQueries;
+import com.queuess.ReadCsvFile;
 
 public class DatabaseConn {
 	public static void insert(Job j1){
 		try {
 			Connection connection=getConnection();
-			PreparedStatement inserted=connection.prepareStatement(StudentQueries.insertQuery);
+			PreparedStatement inserted=connection.prepareStatement(StudentQueries.INSERT_QUERY);
 			{
 				inserted.setString(1, j1.getStudName());
-				inserted.setBigDecimal(2, new BigDecimal(j1.getStudMark1()));
-				inserted.setBigDecimal(3, new BigDecimal(j1.getStudMark2()));
-				inserted.setBigDecimal(4, new BigDecimal(j1.getStudMark3()));
-				inserted.setBigDecimal(5, new BigDecimal(j1.calcPercentage()));
+				inserted.setDouble(2, j1.getStudMark1());
+				inserted.setDouble(3, j1.getStudMark2());
+				inserted.setDouble(4, j1.getStudMark3());
+				inserted.setDouble(5, j1.calcPercentage());
 				inserted.executeUpdate();
 			}
 		}
@@ -33,7 +34,7 @@ public class DatabaseConn {
 	public static void  createTable() {
 		try {
 			Connection connection=getConnection();
-			PreparedStatement create=connection.prepareStatement("CREATE TABLE IF NOT EXISTS marklists(name varchar(225),maths int NOT NULL AUTO_INCREMENT,physics int NOT NULL,chemistry int NOT NULL ,percentage int NOT NULL ,PRIMARY KEY(maths),created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+			PreparedStatement create=connection.prepareStatement("CREATE TABLE IF NOT EXISTS MARKLISTS(name varchar(225),maths int NOT NULL AUTO_INCREMENT,physics int NOT NULL,chemistry int NOT NULL ,percentage int NOT NULL ,PRIMARY KEY(maths),created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 			create.executeUpdate();
 		}
 		catch(Exception e) {
@@ -45,13 +46,14 @@ public class DatabaseConn {
 	}
 	public static Connection getConnection(){
 		try {
-			String driver="com.mysql.cj.jdbc.Driver";
-			String url="jdbc:mysql://localhost:3306/student";
-			String username="root";
-			String password="Betcypbabu1998*";
-			Class.forName(driver);
+			Properties prop=new Properties();
+			prop.load(new FileInputStream("Config.properties"));
+		
+			String theUsername=prop.getProperty("username");
+			String thePassword=prop.getProperty("password");
+			String theDburl=prop.getProperty("url");
 			
-			Connection connection=DriverManager.getConnection(url, username, password);
+			Connection connection=DriverManager.getConnection(theDburl, theUsername, thePassword);
 			System.out.println("connected");
 			return connection; 
 		}
@@ -59,5 +61,13 @@ public class DatabaseConn {
 			System.out.println(e);
 		}
 		return null;
+	}
+
+	public void insertDataInToDatabase(ReadCsvFile csv) throws InterruptedException {
+			while(csv.isQueueEmpty()==false) {
+				Job j1=csv.fetch();
+				System.out.println("fetched items are:"+j1.getStudName()+" "+j1.getStudMark1()+" "+j1.getStudMark2()+" "+j1.getStudMark3()+" "+j1.calcPercentage());
+				insert(j1);
+			}
 	}
 }

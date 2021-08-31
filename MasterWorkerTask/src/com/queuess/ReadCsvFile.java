@@ -17,23 +17,19 @@ import java.util.concurrent.BlockingQueue;
 public class ReadCsvFile {
 
 	protected BlockingQueue<Job> queue =new ArrayBlockingQueue<Job>(2);
-//	private Job job;
-	
-	
-
 	public void readCsvFile(String file) throws IOException {
 		 BufferedReader br=new BufferedReader(new FileReader(file)); 
 		 String line="";
 		 try {
 			 br.readLine();
 			 while((line=br.readLine())!=null) {
-				 String[] count= line.split(",");
-				 System.out.println(count[0]+" " +count[1]+" "+count[2]+" "+count[3]);
-				 int studMark1=Integer.parseInt(count[1]);
-				 int studMark2=Integer.parseInt(count[2]);
-				 int studMark3=Integer.parseInt(count[3]);
+				 String[] data= line.split(",");
+				 System.out.println(data[0]+" " +data[1]+" "+data[2]+" "+data[3]);
+				 int studMark1=Integer.parseInt(data[1]);
+				 int studMark2=Integer.parseInt(data[2]);
+				 int studMark3=Integer.parseInt(data[3]);
 				 Job job=new Job();
-				 job.setStudName(count[0]);
+				 job.setStudName(data[0]);
 				 job.setStudMark1(studMark1);
 				 job.setStudMark2(studMark2);
 				 job.setStudMark3(studMark3);
@@ -47,6 +43,7 @@ public class ReadCsvFile {
 		 }
 	}
 	
+
 	public Job fetch() throws InterruptedException {
 		return queue.take();
 	
@@ -55,6 +52,7 @@ public class ReadCsvFile {
 	public boolean isQueueEmpty() {
 		return queue.isEmpty();
 	}
+
 }	
 
 
