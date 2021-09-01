@@ -10,9 +10,9 @@ import com.constants.StudentQueries;
 import com.queuess.ReadCsvFile;
 
 public class DatabaseConn {
-	public static void insert(Job j1){
+	public static void insert(Job j1,String file1){
 		try {
-			Connection connection=getConnection();
+			Connection connection=getConnection(file1);
 			PreparedStatement inserted=connection.prepareStatement(StudentQueries.INSERT_QUERY);
 			{
 				inserted.setString(1, j1.getStudName());
@@ -31,10 +31,10 @@ public class DatabaseConn {
 		}
 	}
 	
-	public static void  createTable() {
+	public static void  createTable(String file1) {
 		try {
-			Connection connection=getConnection();
-			PreparedStatement create=connection.prepareStatement("CREATE TABLE IF NOT EXISTS MARKLISTS(name varchar(225),maths int NOT NULL AUTO_INCREMENT,physics int NOT NULL,chemistry int NOT NULL ,percentage int NOT NULL ,PRIMARY KEY(maths),created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+			Connection connection=getConnection(file1);
+			PreparedStatement create=connection.prepareStatement("CREATE TABLE IF NOT EXISTS MARKLIST(name varchar(225),maths int NOT NULL AUTO_INCREMENT,physics int NOT NULL,chemistry int NOT NULL ,percentage int NOT NULL ,PRIMARY KEY(maths),created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 			create.executeUpdate();
 		}
 		catch(Exception e) {
@@ -44,7 +44,7 @@ public class DatabaseConn {
 			System.out.println("Function Completed");
 		}
 	}
-	public static Connection getConnection(){
+	public static Connection getConnection(String file1){
 		try {
 			Properties prop=new Properties();
 			prop.load(new FileInputStream("Config.properties"));
@@ -63,11 +63,13 @@ public class DatabaseConn {
 		return null;
 	}
 
-	public void insertDataInToDatabase(ReadCsvFile csv) throws InterruptedException {
+	public void insertDataInToDatabase(ReadCsvFile csv,String file1) throws InterruptedException {
 			while(csv.isQueueEmpty()==false) {
 				Job j1=csv.fetch();
 				System.out.println("fetched items are:"+j1.getStudName()+" "+j1.getStudMark1()+" "+j1.getStudMark2()+" "+j1.getStudMark3()+" "+j1.calcPercentage());
-				insert(j1);
+			    insert(j1,file1);
+		
 			}
 	}
+
 }

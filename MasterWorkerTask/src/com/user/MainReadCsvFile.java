@@ -1,5 +1,4 @@
 package com.user;
-import com.business.Job;
 import com.databases.DatabaseConn;
 import com.queuess.ReadCsvFile;
 public class MainReadCsvFile {
@@ -10,7 +9,8 @@ public class MainReadCsvFile {
 		csv.readCsvFile(file);
 		Thread.sleep(500);
 		DatabaseConn db=new DatabaseConn();
-		db.insertDataInToDatabase(csv);
+		String file1=args[0];
+		db.insertDataInToDatabase(csv, file1);
 	}
 }
 
