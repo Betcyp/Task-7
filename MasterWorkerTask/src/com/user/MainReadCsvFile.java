@@ -10,6 +10,7 @@ public class MainReadCsvFile {
 		Thread.sleep(500);
 		DatabaseConn db=new DatabaseConn();
 		String file1=args[0];
+		db.getConnection(file1);
 		db.insertDataInToDatabase(csv, file1);
 	}
 }

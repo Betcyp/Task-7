@@ -10,6 +10,8 @@ import com.constants.StudentQueries;
 import com.queuess.ReadCsvFile;
 
 public class DatabaseConn {
+	
+	
 	public static void insert(Job j1,String file1){
 		try {
 			Connection connection=getConnection(file1);
@@ -20,29 +22,28 @@ public class DatabaseConn {
 				inserted.setDouble(3, j1.getStudMark2());
 				inserted.setDouble(4, j1.getStudMark3());
 				inserted.setDouble(5, j1.calcPercentage());
-				inserted.executeUpdate();
 			}
+			inserted.executeUpdate();
+			connection.close();
+			
 		}
 		catch(Exception e) {
 			System.out.println(e);
 		}
-		finally {
-			System.out.println("Insertion completed");
-		}
 	}
 	
-	public static void  createTable(String file1) {
+	public static void createTable(String file1) {
 		try {
 			Connection connection=getConnection(file1);
 			PreparedStatement create=connection.prepareStatement("CREATE TABLE IF NOT EXISTS MARKLIST(name varchar(225),maths int NOT NULL AUTO_INCREMENT,physics int NOT NULL,chemistry int NOT NULL ,percentage int NOT NULL ,PRIMARY KEY(maths),created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 			create.executeUpdate();
+			connection.close();
+
 		}
 		catch(Exception e) {
 			System.out.println(e);
 		}
-		finally {
-			System.out.println("Function Completed");
-		}
+		
 	}
 	public static Connection getConnection(String file1){
 		try {
@@ -55,7 +56,7 @@ public class DatabaseConn {
 			
 			Connection connection=DriverManager.getConnection(theDburl, theUsername, thePassword);
 			System.out.println("connected");
-			return connection; 
+			return connection;
 		}
 		catch(Exception e) {
 			System.out.println(e);
@@ -66,8 +67,7 @@ public class DatabaseConn {
 	public void insertDataInToDatabase(ReadCsvFile csv,String file1) throws InterruptedException {
 			while(csv.isQueueEmpty()==false) {
 				Job j1=csv.fetch();
-				System.out.println("fetched items are:"+j1.getStudName()+" "+j1.getStudMark1()+" "+j1.getStudMark2()+" "+j1.getStudMark3()+" "+j1.calcPercentage());
-			    insert(j1,file1);
+				insert(j1,file1);
 		
 			}
 	}
