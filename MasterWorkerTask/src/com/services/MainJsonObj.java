@@ -10,8 +10,9 @@ public class MainJsonObj {
 		JsonObj obj=new JsonObj();
 		JSONObject jsonObject=obj.object();
 		String file1=args[0];
-		obj.insertInToDbForJsonObject(jsonObject,file1);
-		
+		InsertDatabase id=new InsertDatabase();
+		id.getConnection(file1);
+		id.frameResponse(file1);
 		
 	}
 }
